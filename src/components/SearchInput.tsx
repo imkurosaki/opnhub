@@ -17,7 +17,12 @@ export type Repo = {
   stargazers_count: number;
   forks_count: number;
   topics: string[];
-}
+  open_issues_count: number;
+  owner: {
+    avatar_url: string;
+    login: string;
+  };
+};
 
 const SearchInput = () => {
   const [selectedLanguages, setSelectedLanguages] = useState<Option[]>([]);

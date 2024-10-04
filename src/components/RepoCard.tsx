@@ -4,8 +4,9 @@ import { Card } from "./ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Repo } from "./SearchInput";
 
-const RepoCard = ({ data }: any) => {
+const RepoCard = ({ data }: { data: Repo }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
@@ -18,6 +19,12 @@ const RepoCard = ({ data }: any) => {
         <div className="space-y-1 w-fit px-2">
           <h3 className="text-xl font-bold w-full">{data.name}</h3>
           <p className="text-muted-foreground">{data.owner.login}</p>
+          {data.language && (
+            <p className="text-sm font-medium text-primary">
+              <CodeIcon className="w-4 h-4 inline-block mr-1" />
+              {data.language}
+            </p>
+          )}
         </div>
       </div>
       <div className="space-y-4 text-sm min-w-fit">
@@ -25,7 +32,7 @@ const RepoCard = ({ data }: any) => {
           {showMore
             ? data.description
             : data?.description?.split(" ").slice(0, 10).join(" ")}
-          {data.description?.split(" ").length > 10 && (
+          {data.description && data.description.split(" ").length > 10 && (
             <span
               className="text-primary cursor-pointer"
               onClick={() => setShowMore(!showMore)}
@@ -96,4 +103,25 @@ function BugIcon(props: any) {
     </svg>
   );
 }
+
+function CodeIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  );
+}
+
 export default RepoCard;
